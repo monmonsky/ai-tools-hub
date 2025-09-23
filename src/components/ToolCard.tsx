@@ -8,6 +8,9 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { getReviewStats } from "@/lib/reviews";
+import StarRating from "./StarRating";
 
 interface ToolCardProps {
   tool: Tool;
@@ -16,6 +19,15 @@ interface ToolCardProps {
 export default function ToolCard({ tool }: ToolCardProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+
+  // Review stats state
+  const [reviewStats, setReviewStats] = useState({ averageRating: 0, totalReviews: 0, ratingDistribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 } });
+
+  // Load review stats on mount
+  useEffect(() => {
+    const stats = getReviewStats(tool.slug);
+    setReviewStats(stats);
+  }, [tool.slug]);
 
   const handleAddToCompare = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent card click
@@ -166,12 +178,16 @@ export default function ToolCard({ tool }: ToolCardProps) {
 
           {/* Rating */}
           <div className="flex items-center justify-between mt-4">
-            <div className="flex items-center space-x-1">
-              {renderStars(tool.rating)}
+            <StarRating
+              rating={reviewStats.totalReviews > 0 ? reviewStats.averageRating : tool.rating}
+              size="sm"
+            />
+            <div className="text-sm font-medium text-gray-600 dark:text-gray-400">
+              {reviewStats.totalReviews > 0 ? reviewStats.averageRating : tool.rating}
+              {reviewStats.totalReviews > 0 && (
+                <span className="ml-1">({reviewStats.totalReviews})</span>
+              )}
             </div>
-            <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
-              {tool.rating}
-            </span>
           </div>
         </CardContent>
 

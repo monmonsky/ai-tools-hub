@@ -8,7 +8,11 @@ import Footer from "@/components/footer";
 import { getToolBySlug } from "@/lib/data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { use } from "react";
+import { use, useState, useEffect } from "react";
+import StarRating from "@/components/StarRating";
+import ReviewForm from "@/components/ReviewForm";
+import ReviewList from "@/components/ReviewList";
+import { getReviews, getReviewStats, type Review } from "@/lib/reviews";
 
 interface ToolPageProps {
   params: Promise<{
@@ -19,6 +23,27 @@ interface ToolPageProps {
 export default function ToolPage({ params }: ToolPageProps) {
   const resolvedParams = use(params);
   const tool = getToolBySlug(resolvedParams.slug);
+
+  // Review state management
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [reviewStats, setReviewStats] = useState({ averageRating: 0, totalReviews: 0, ratingDistribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 } });
+
+  // Load reviews on mount and when tool changes
+  useEffect(() => {
+    if (tool) {
+      const toolReviews = getReviews(tool.slug);
+      const stats = getReviewStats(tool.slug);
+      setReviews(toolReviews);
+      setReviewStats(stats);
+    }
+  }, [tool]);
+
+  const handleReviewAdded = (newReview: Review) => {
+    const updatedReviews = getReviews(tool!.slug);
+    const updatedStats = getReviewStats(tool!.slug);
+    setReviews(updatedReviews);
+    setReviewStats(updatedStats);
+  };
 
   if (!tool) {
     return (
@@ -146,11 +171,15 @@ export default function ToolPage({ params }: ToolPageProps) {
                         {tool.category}
                       </Badge>
                       <div className="flex items-center space-x-2">
-                        <div className="flex items-center space-x-1">
-                          {renderStars(tool.rating)}
-                        </div>
+                        <StarRating
+                          rating={reviewStats.totalReviews > 0 ? reviewStats.averageRating : tool.rating}
+                          size="md"
+                        />
                         <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                          {tool.rating}
+                          {reviewStats.totalReviews > 0 ? reviewStats.averageRating : tool.rating}
+                          {reviewStats.totalReviews > 0 && (
+                            <span className="ml-1">({reviewStats.totalReviews} review{reviewStats.totalReviews !== 1 ? 's' : ''})</span>
+                          )}
                         </span>
                       </div>
                     </div>
@@ -259,6 +288,65 @@ export default function ToolPage({ params }: ToolPageProps) {
                     </div>
                   ))}
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Reviews Section */}
+        <section className="py-16 bg-gray-50 dark:bg-gray-900/50">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="mb-12">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+                Reviews
+              </h2>
+              {reviewStats.totalReviews > 0 && (
+                <div className="flex items-center space-x-6 mb-8">
+                  <div className="flex items-center space-x-3">
+                    <div className="text-4xl font-bold text-gray-900 dark:text-white">
+                      {reviewStats.averageRating}
+                    </div>
+                    <div>
+                      <StarRating rating={reviewStats.averageRating} size="lg" />
+                      <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                        Based on {reviewStats.totalReviews} review{reviewStats.totalReviews !== 1 ? 's' : ''}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Rating Distribution */}
+                  <div className="flex-1 max-w-md">
+                    {[5, 4, 3, 2, 1].map((star) => (
+                      <div key={star} className="flex items-center space-x-2 text-sm">
+                        <span className="w-8 text-gray-600 dark:text-gray-400">{star}★</span>
+                        <div className="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                          <div
+                            className="bg-yellow-400 h-2 rounded-full transition-all duration-300"
+                            style={{
+                              width: `${reviewStats.totalReviews > 0 ? (reviewStats.ratingDistribution[star as keyof typeof reviewStats.ratingDistribution] / reviewStats.totalReviews) * 100 : 0}%`
+                            }}
+                          />
+                        </div>
+                        <span className="w-8 text-gray-600 dark:text-gray-400">
+                          {reviewStats.ratingDistribution[star as keyof typeof reviewStats.ratingDistribution]}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="space-y-8">
+              {/* Review Form */}
+              <ReviewForm toolSlug={tool.slug} onReviewAdded={handleReviewAdded} />
+
+              {/* Reviews List */}
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
+                  {reviewStats.totalReviews > 0 ? 'All Reviews' : 'No Reviews Yet'}
+                </h3>
+                <ReviewList reviews={reviews} />
               </div>
             </div>
           </div>
