@@ -6,6 +6,8 @@ import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
 import ToolCard from "@/components/ToolCard";
 import { tools, categories, Tool } from "@/lib/data";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export default function ToolsPage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -69,20 +71,22 @@ export default function ToolsPage() {
                 <div className="relative bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-gray-300 dark:border-purple-500/30 rounded-2xl p-2">
                   <div className="flex items-center">
                     <Search className="absolute left-6 w-5 h-5 text-gray-500 dark:text-gray-400" />
-                    <input
+                    <Input
                       type="text"
                       placeholder="Search AI tools by name, description, or category..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full pl-14 pr-6 py-4 text-lg bg-transparent text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 outline-none"
+                      className="w-full pl-14 pr-6 py-4 text-lg bg-transparent text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 outline-none border-none"
                     />
                     {(searchQuery || selectedCategory !== "All") && (
-                      <button
+                      <Button
+                        variant="ghost"
+                        size="sm"
                         onClick={clearFilters}
-                        className="px-4 py-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
+                        className="px-4 py-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
                       >
                         Clear
-                      </button>
+                      </Button>
                     )}
                   </div>
                 </div>
@@ -91,8 +95,9 @@ export default function ToolsPage() {
 
             {/* Category Filter Buttons */}
             <div className="flex flex-wrap justify-center gap-3 mb-8">
-              <button
+              <Button
                 onClick={() => handleCategoryChange("All")}
+                variant={selectedCategory === "All" ? "default" : "outline"}
                 className={`px-6 py-3 rounded-xl font-medium transition-all duration-300 ${
                   selectedCategory === "All"
                     ? "bg-gradient-to-r from-cyan-500 to-purple-600 text-white shadow-lg transform scale-105"
@@ -100,11 +105,12 @@ export default function ToolsPage() {
                 }`}
               >
                 All Categories
-              </button>
+              </Button>
               {categories.map((category) => (
-                <button
+                <Button
                   key={category.id}
                   onClick={() => handleCategoryChange(category.name)}
+                  variant={selectedCategory === category.name ? "default" : "outline"}
                   className={`px-6 py-3 rounded-xl font-medium transition-all duration-300 ${
                     selectedCategory === category.name
                       ? "bg-gradient-to-r from-cyan-500 to-purple-600 text-white shadow-lg transform scale-105"
@@ -112,7 +118,7 @@ export default function ToolsPage() {
                   }`}
                 >
                   {category.name}
-                </button>
+                </Button>
               ))}
             </div>
 
@@ -166,12 +172,12 @@ export default function ToolsPage() {
                   <p className="text-gray-600 dark:text-gray-400 mb-6">
                     Try adjusting your search terms or category filters to find what you're looking for.
                   </p>
-                  <button
+                  <Button
                     onClick={clearFilters}
                     className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-semibold rounded-xl hover:from-cyan-600 hover:to-purple-700 transition-all duration-300"
                   >
                     Clear Filters
-                  </button>
+                  </Button>
                 </div>
               </div>
             )}

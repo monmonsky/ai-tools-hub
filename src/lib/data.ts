@@ -24,6 +24,7 @@ export interface Category {
   name: string;
   slug: string;
   description: string;
+  icon: string;
 }
 
 export const categories: Category[] = [
@@ -31,37 +32,43 @@ export const categories: Category[] = [
     id: '1',
     name: 'AI Assistant',
     slug: 'ai-assistant',
-    description: 'Intelligent chatbots and virtual assistants'
+    description: 'Intelligent chatbots and virtual assistants',
+    icon: 'MessageCircle'
   },
   {
     id: '2',
     name: 'Image Generation',
     slug: 'image-generation',
-    description: 'AI-powered image creation and editing tools'
+    description: 'AI-powered image creation and editing tools',
+    icon: 'Image'
   },
   {
     id: '3',
     name: 'Code',
     slug: 'code',
-    description: 'AI coding assistants and development tools'
+    description: 'AI coding assistants and development tools',
+    icon: 'Code'
   },
   {
     id: '4',
     name: 'Writing',
     slug: 'writing',
-    description: 'AI writing assistants and content generation'
+    description: 'AI writing assistants and content generation',
+    icon: 'PenTool'
   },
   {
     id: '5',
     name: 'Audio',
     slug: 'audio',
-    description: 'Voice synthesis and audio processing tools'
+    description: 'Voice synthesis and audio processing tools',
+    icon: 'Mic'
   },
   {
     id: '6',
     name: 'Video',
     slug: 'video',
-    description: 'AI video creation and editing platforms'
+    description: 'AI video creation and editing platforms',
+    icon: 'Video'
   }
 ];
 

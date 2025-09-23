@@ -6,15 +6,19 @@ import { ArrowLeft, ExternalLink, Star, Check, X } from "lucide-react";
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
 import { getToolBySlug } from "@/lib/data";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { use } from "react";
 
 interface ToolPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export default function ToolPage({ params }: ToolPageProps) {
-  const tool = getToolBySlug(params.slug);
+  const resolvedParams = use(params);
+  const tool = getToolBySlug(resolvedParams.slug);
 
   if (!tool) {
     return (
@@ -31,13 +35,15 @@ export default function ToolPage({ params }: ToolPageProps) {
             <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
               The AI tool you're looking for doesn't exist or has been moved.
             </p>
-            <Link
-              href="/tools"
-              className="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-semibold rounded-xl hover:from-cyan-600 hover:to-purple-700 transition-all duration-300"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              <span>Back to Tools</span>
-            </Link>
+            <Button asChild>
+              <Link
+                href="/tools"
+                className="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-semibold rounded-xl hover:from-cyan-600 hover:to-purple-700 transition-all duration-300"
+              >
+                <ArrowLeft className="w-5 h-5" />
+                <span>Back to Tools</span>
+              </Link>
+            </Button>
           </div>
         </main>
         <Footer />
@@ -122,9 +128,9 @@ export default function ToolPage({ params }: ToolPageProps) {
                 </div>
 
                 {/* Pricing Badge */}
-                <span className={`inline-block px-4 py-2 text-sm font-medium rounded-full ${getPricingColor(tool.pricing)}`}>
+                <Badge variant="secondary" className={getPricingColor(tool.pricing)}>
                   {tool.pricing.charAt(0).toUpperCase() + tool.pricing.slice(1)}
-                </span>
+                </Badge>
               </div>
 
               {/* Tool Info */}
@@ -136,9 +142,9 @@ export default function ToolPage({ params }: ToolPageProps) {
                     </h1>
 
                     <div className="flex items-center space-x-4 mb-6">
-                      <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800/50 text-gray-700 dark:text-gray-300 text-sm rounded-full">
+                      <Badge variant="outline">
                         {tool.category}
-                      </span>
+                      </Badge>
                       <div className="flex items-center space-x-2">
                         <div className="flex items-center space-x-1">
                           {renderStars(tool.rating)}

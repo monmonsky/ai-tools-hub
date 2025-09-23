@@ -6,6 +6,8 @@ import { ChevronDown, Star, Check, X, ExternalLink, Plus } from "lucide-react";
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
 import { tools, Tool } from "@/lib/data";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 export default function ComparePage() {
   const router = useRouter();
@@ -158,41 +160,47 @@ export default function ComparePage() {
                           </div>
 
                           <div className="flex justify-between items-center">
-                            <button
+                            <Button
+                              variant="ghost"
+                              size="sm"
                               onClick={() => setDropdownOpen(dropdownOpen === index ? null : index)}
-                              className="text-sm text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 transition-colors"
+                              className="text-sm text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300"
                             >
                               Change Tool
-                            </button>
-                            <button
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
                               onClick={() => handleRemoveTool(index)}
-                              className="text-sm text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition-colors"
+                              className="text-sm text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300"
                             >
                               Remove
-                            </button>
+                            </Button>
                           </div>
                         </div>
                       ) : (
                         // Empty Slot
-                        <button
+                        <Button
+                          variant="ghost"
                           onClick={() => setDropdownOpen(dropdownOpen === index ? null : index)}
-                          className="w-full p-8 flex flex-col items-center justify-center space-y-2 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-xl transition-colors"
+                          className="w-full p-8 flex flex-col items-center justify-center space-y-2 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-xl h-auto"
                         >
                           <Plus className="w-8 h-8 text-gray-400" />
                           <span className="text-gray-600 dark:text-gray-400 font-medium">
                             Select Tool {index + 1}
                           </span>
-                        </button>
+                        </Button>
                       )}
 
                       {/* Dropdown */}
                       {dropdownOpen === index && (
                         <div className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-xl z-50 max-h-60 overflow-y-auto">
                           {getAvailableTools(index).map((tool) => (
-                            <button
+                            <Button
                               key={tool.id}
+                              variant="ghost"
                               onClick={() => handleToolSelect(index, tool)}
-                              className="w-full p-3 flex items-center space-x-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors first:rounded-t-xl last:rounded-b-xl"
+                              className="w-full p-3 flex items-center space-x-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors first:rounded-t-xl last:rounded-b-xl h-auto justify-start"
                             >
                               <div className="w-8 h-8 bg-gradient-to-br from-cyan-400 to-purple-600 rounded-md flex items-center justify-center flex-shrink-0">
                                 <span className="text-white font-bold text-sm">
@@ -207,7 +215,7 @@ export default function ComparePage() {
                                   {tool.category}
                                 </div>
                               </div>
-                            </button>
+                            </Button>
                           ))}
                         </div>
                       )}
@@ -254,9 +262,9 @@ export default function ComparePage() {
                         {selectedTools.map((tool, index) => (
                           tool && (
                             <td key={index} className="px-6 py-4 text-center">
-                              <span className="inline-block px-3 py-1 bg-gray-100 dark:bg-gray-800/50 text-gray-700 dark:text-gray-300 text-sm rounded-full">
+                              <Badge variant="outline">
                                 {tool.category}
-                              </span>
+                              </Badge>
                             </td>
                           )
                         ))}
@@ -270,9 +278,9 @@ export default function ComparePage() {
                         {selectedTools.map((tool, index) => (
                           tool && (
                             <td key={index} className="px-6 py-4 text-center">
-                              <span className={`inline-block px-3 py-1 text-sm font-medium rounded-full ${getPricingColor(tool.pricing)}`}>
+                              <Badge variant="secondary" className={getPricingColor(tool.pricing)}>
                                 {tool.pricing.charAt(0).toUpperCase() + tool.pricing.slice(1)}
-                              </span>
+                              </Badge>
                             </td>
                           )
                         ))}
