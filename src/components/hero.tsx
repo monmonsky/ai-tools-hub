@@ -31,10 +31,10 @@ export default function Hero() {
         <div className="mb-8">
           <h1 className="text-6xl md:text-8xl font-bold mb-6 leading-tight">
             <span className="bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent animate-pulse">
-              Discover
+              Temukan
             </span>
             <br />
-            <span className="text-gray-900 dark:text-white">the Future of</span>
+            <span className="text-gray-900 dark:text-white">Masa Depan</span>
             <br />
             <span className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
               AI Tools
@@ -48,8 +48,8 @@ export default function Hero() {
 
         {/* Subtitle */}
         <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed">
-          Unlock the power of artificial intelligence with our curated collection of
-          <span className="text-cyan-400 font-semibold"> cutting-edge tools</span> designed for the next generation
+          Buka kekuatan artificial intelligence dengan koleksi terpilih
+          <span className="text-cyan-400 font-semibold"> tools canggih</span> yang dirancang untuk generasi masa depan
         </p>
 
         {/* Search Section */}
@@ -57,7 +57,7 @@ export default function Hero() {
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-600/20 rounded-2xl blur-xl"></div>
             <div className="relative bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-gray-300 dark:border-purple-500/30 rounded-2xl p-2">
-              <SearchWithSuggestions placeholder="Search for AI tools, categories, or features..." />
+              <SearchWithSuggestions placeholder="Cari AI tools, kategori, atau fitur..." />
             </div>
           </div>
         </div>
@@ -69,25 +69,25 @@ export default function Hero() {
               icon: "🚀",
               gradientFrom: "from-orange-400",
               gradientTo: "to-red-600",
-              title: "Latest AI Tools",
-              description: "Discover cutting-edge AI innovations as they emerge",
-              highlight: "New tools added daily"
+              title: "AI Tools Terbaru",
+              description: "Temukan inovasi AI terdepan saat mereka muncul",
+              highlight: "Tools baru setiap hari"
             },
             {
               icon: "⚡",
               gradientFrom: "from-yellow-400",
               gradientTo: "to-orange-500",
-              title: "Smart Comparison",
-              description: "AI-powered tool comparison to find your perfect match",
-              highlight: "Compare up to 3 tools"
+              title: "Perbandingan Cerdas",
+              description: "Perbandingan tools berbasis AI untuk menemukan yang cocok",
+              highlight: "Bandingkan hingga 3 tools"
             },
             {
               icon: "🎯",
               gradientFrom: "from-emerald-400",
               gradientTo: "to-cyan-600",
-              title: "Curated Selection",
-              description: "Handpicked tools verified by AI experts and community",
-              highlight: "Expert reviewed"
+              title: "Pilihan Terkurasi",
+              description: "Tools pilihan yang diverifikasi oleh expert AI dan komunitas",
+              highlight: "Telah direview expert"
             }
           ].map((feature, index) => (
             <div key={index} className="relative group transform transition-all duration-300 hover:scale-105 hover:-translate-y-2">

@@ -5,6 +5,7 @@ import { Search, Filter } from "lucide-react";
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
 import ToolCard from "@/components/ToolCard";
+import CompareButton from "@/components/CompareButton";
 import { tools, categories, Tool } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -186,6 +187,7 @@ export default function ToolsPage() {
       </main>
 
       <Footer />
+      <CompareButton />
     </div>
   );
 }

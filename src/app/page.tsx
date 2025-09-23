@@ -2,6 +2,7 @@ import Navigation from "@/components/navigation";
 import Hero from "@/components/hero";
 import Footer from "@/components/footer";
 import ToolCard from "@/components/ToolCard";
+import CompareButton from "@/components/CompareButton";
 import { tools, categories } from "@/lib/data";
 import Link from "next/link";
 import * as LucideIcons from "lucide-react";
@@ -21,13 +22,13 @@ export default function Home() {
             {/* Section Header */}
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-                Explore by
+                Jelajahi Berdasarkan
                 <span className="bg-gradient-to-r from-cyan-400 to-purple-600 bg-clip-text text-transparent ml-2">
-                  Category
+                  Kategori
                 </span>
               </h2>
               <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                Find the perfect AI tools for your specific needs across different categories
+                Temukan AI tools yang sempurna untuk kebutuhan spesifik Anda di berbagai kategori
               </p>
             </div>
 
@@ -89,13 +90,13 @@ export default function Home() {
             <div className="text-center mb-16">
               <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-cyan-500/10 to-purple-600/10 border border-cyan-500/20 rounded-full px-4 py-2 mb-6">
                 <span className="text-2xl">⭐</span>
-                <span className="text-sm font-medium text-cyan-600 dark:text-cyan-400">Featured</span>
+                <span className="text-sm font-medium text-cyan-600 dark:text-cyan-400">Unggulan</span>
               </div>
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-                Top AI Tools
+                AI Tools Terbaik
               </h2>
               <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                Hand-picked collection of the most popular and powerful AI tools that are transforming industries and workflows
+                Koleksi pilihan AI tools paling populer dan powerful yang mengubah industri dan workflow
               </p>
             </div>
 
@@ -116,23 +117,23 @@ export default function Home() {
                   <span className="text-white text-2xl font-bold">{tools.length}</span>
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">AI Tools</h3>
-                <p className="text-gray-600 dark:text-gray-400">Carefully curated and reviewed</p>
+                <p className="text-gray-600 dark:text-gray-400">Dikurasi dan direview dengan teliti</p>
               </div>
 
               <div className="text-center">
                 <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-white text-2xl font-bold">{categories.length}</span>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Categories</h3>
-                <p className="text-gray-600 dark:text-gray-400">From coding to creativity</p>
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Kategori</h3>
+                <p className="text-gray-600 dark:text-gray-400">Dari coding hingga kreativitas</p>
               </div>
 
               <div className="text-center">
                 <div className="w-16 h-16 bg-gradient-to-br from-orange-400 to-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-white text-2xl">⚡</span>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Daily Updates</h3>
-                <p className="text-gray-600 dark:text-gray-400">Fresh tools added regularly</p>
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Update Harian</h3>
+                <p className="text-gray-600 dark:text-gray-400">Tools baru ditambahkan secara rutin</p>
               </div>
             </div>
 
@@ -143,7 +144,7 @@ export default function Home() {
                   href="/tools"
                   className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-purple-600 text-white text-lg font-semibold rounded-xl hover:from-cyan-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-black shadow-lg"
                 >
-                  Explore All {tools.length} Tools
+                  Jelajahi Semua {tools.length} Tools
                   <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </svg>
@@ -154,6 +155,7 @@ export default function Home() {
         </section>
       </main>
       <Footer />
+      <CompareButton />
     </div>
   );
 }
