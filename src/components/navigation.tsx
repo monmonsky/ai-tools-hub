@@ -19,7 +19,7 @@ export default function Navigation() {
                 </svg>
               </div>
               <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-purple-600 bg-clip-text text-transparent">
-                AI Tools Hub
+                Aikita
               </span>
             </Link>
           </div>

@@ -146,7 +146,7 @@ export default function NotFound() {
                       Did you know?
                     </h4>
                     <p className="text-sm text-gray-600 dark:text-gray-300">
-                      Our AI Tools Hub features over {Math.floor(Math.random() * 50) + 100} carefully curated tools across {Math.floor(Math.random() * 10) + 15} categories,
+                      Aikita features over {Math.floor(Math.random() * 50) + 100} carefully curated tools across {Math.floor(Math.random() * 10) + 15} categories,
                       helping thousands of users discover the perfect AI solutions for their needs.
                     </p>
                   </div>

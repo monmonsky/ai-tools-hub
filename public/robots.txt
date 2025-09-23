@@ -1,0 +1,38 @@
+# Robots.txt for Aikita.id - AI Tools Directory Indonesia
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://aikita.id/sitemap.xml
+
+# Priority pages for crawling
+Allow: /tools
+Allow: /categories
+Allow: /category/*
+Allow: /tools/*
+Allow: /compare
+
+# Block admin areas (if any in future)
+Disallow: /admin
+Disallow: /api/internal
+
+# Block temporary/development files
+Disallow: /_next/static/chunks/webpack-*
+Disallow: *.json$
+
+# Crawl delay for better server performance
+Crawl-delay: 1
+
+# Specific rules for major search engines
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: YandexBot
+Allow: /
+Crawl-delay: 2

@@ -1,7 +1,7 @@
 {
-  "name": "AI Tools Hub",
-  "short_name": "AI Tools Hub",
-  "description": "Discover the best AI tools for 2024",
+  "name": "Aikita - Direktori AI Tools Indonesia",
+  "short_name": "Aikita",
+  "description": "Platform terlengkap untuk menemukan dan membandingkan AI tools terbaik di Indonesia",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#000000",
@@ -22,6 +22,6 @@
     }
   ],
   "categories": ["productivity", "utilities", "education"],
-  "lang": "en",
+  "lang": "id",
   "dir": "ltr"
 }
