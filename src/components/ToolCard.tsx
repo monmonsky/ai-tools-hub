@@ -1,6 +1,6 @@
 "use client";
 
-import { Star, ExternalLink, Plus } from "lucide-react";
+import { Star, ExternalLink, Plus, MessageSquare, Bot, Image as ImageIcon, Palette, Github, Code, PenTool, Mic, Video, Search, Monitor } from "lucide-react";
 import { Tool } from "@/lib/data";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -71,6 +71,35 @@ export default function ToolCard({ tool }: ToolCardProps) {
     }
   };
 
+  const getToolIcon = (toolName: string) => {
+    const iconProps = { className: "w-6 h-6 text-white" };
+
+    switch (toolName.toLowerCase()) {
+      case 'chatgpt':
+        return <MessageSquare {...iconProps} />;
+      case 'claude':
+        return <Bot {...iconProps} />;
+      case 'midjourney':
+        return <Palette {...iconProps} />;
+      case 'dall-e':
+        return <ImageIcon {...iconProps} />;
+      case 'github copilot':
+        return <Github {...iconProps} />;
+      case 'cursor':
+        return <Monitor {...iconProps} />;
+      case 'jasper':
+        return <PenTool {...iconProps} />;
+      case 'elevenlabs':
+        return <Mic {...iconProps} />;
+      case 'runway':
+        return <Video {...iconProps} />;
+      case 'perplexity':
+        return <Search {...iconProps} />;
+      default:
+        return <Code {...iconProps} />;
+    }
+  };
+
   const renderStars = (rating: number) => {
     const stars = [];
     const fullStars = Math.floor(rating);
@@ -123,24 +152,27 @@ export default function ToolCard({ tool }: ToolCardProps) {
   };
 
   return (
-    <div className="group relative">
+    <div className="group relative transform transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1">
       {/* Glow effect */}
-      <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-purple-600/10 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-purple-600/10 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+
+      {/* Enhanced shadow on hover */}
+      <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-purple-600/5 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300 blur-2xl transform scale-110"></div>
 
       {/* Card */}
       <Card
-        className="relative bg-white/70 dark:bg-black/30 backdrop-blur-lg border-gray-300 dark:border-purple-500/20 group-hover:border-gray-400 dark:group-hover:border-purple-500/40 transition-all duration-300 h-full flex flex-col cursor-pointer"
+        className="relative bg-white/70 dark:bg-black/30 backdrop-blur-lg border-gray-300 dark:border-purple-500/20 group-hover:border-cyan-400/50 dark:group-hover:border-purple-400/60 transition-all duration-300 h-full flex flex-col cursor-pointer group-hover:shadow-2xl group-hover:shadow-cyan-500/10 dark:group-hover:shadow-purple-500/20"
         onClick={handleCardClick}
       >
         <CardHeader className="pb-3">
           {/* Header with logo and badges */}
           <div className="flex items-start justify-between">
             <div className="flex items-center space-x-3">
-              {/* Logo placeholder */}
-              <div className="w-12 h-12 bg-gradient-to-br from-cyan-400 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <span className="text-white font-bold text-lg">
-                  {tool.name.charAt(0)}
-                </span>
+              {/* Tool icon */}
+              <div className="w-12 h-12 bg-gradient-to-br from-cyan-400 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 group-hover:shadow-lg">
+                <div className="group-hover:scale-110 transition-transform duration-300">
+                  {getToolIcon(tool.name)}
+                </div>
               </div>
 
               <div className="flex-1 min-w-0">
