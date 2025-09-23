@@ -43,7 +43,7 @@ sudo apt install git -y
 
 ### 1. **Masuk ke Directory Project**
 ```bash
-cd /home/teddybear/html/public/ai-tools-hub
+cd /home/teddybear/html/public/aikita
 ```
 
 ### 2. **Pastikan Project Sudah di Clone**
@@ -72,7 +72,7 @@ chmod +x deploy.sh
 chmod +x ssl-setup.sh
 
 # Pastikan user punya akses ke directory
-sudo chown -R $USER:$USER /home/teddybear/html/public/ai-tools-hub
+sudo chown -R $USER:$USER /home/teddybear/html/public/aikita
 ```
 
 ## 🚀 Deploy Aplikasi
@@ -138,7 +138,7 @@ sudo systemctl reload nginx
 
 ### **Install Dependencies**
 ```bash
-cd /home/teddybear/html/public/ai-tools-hub
+cd /home/teddybear/html/public/aikita
 npm install
 ```
 
@@ -243,10 +243,10 @@ sudo kill -9 PID_NUMBER
 ### **Permission Issues**
 ```bash
 # Fix ownership
-sudo chown -R $USER:$USER /home/teddybear/html/public/ai-tools-hub
+sudo chown -R $USER:$USER /home/teddybear/html/public/aikita
 
 # Fix permissions
-chmod 755 /home/teddybear/html/public/ai-tools-hub
+chmod 755 /home/teddybear/html/public/aikita
 ```
 
 ### **Build Errors**

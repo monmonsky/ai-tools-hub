@@ -13,7 +13,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Configuration
-PROJECT_PATH="/home/teddybear/html/public/ai-tools-hub"
+PROJECT_PATH="/home/teddybear/html/public/aikita"
 DOMAIN="aikita.id"
 PM2_APP_NAME="aikita"
 
@@ -65,7 +65,7 @@ module.exports = {
       name: 'aikita',
       script: 'npm',
       args: 'start',
-      cwd: '/home/teddybear/html/public/ai-tools-hub',
+      cwd: '/home/teddybear/html/public/aikita',
       instances: 1,
       autorestart: true,
       watch: false,

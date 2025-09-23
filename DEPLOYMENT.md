@@ -16,7 +16,7 @@ Complete deployment guide for Aikita.id on your server.
 
 ```bash
 # On your server, navigate to project directory
-cd /home/teddybear/html/public/ai-tools-hub
+cd /home/teddybear/html/public/aikita
 
 # Make deployment script executable
 chmod +x deploy.sh
@@ -122,7 +122,7 @@ sudo certbot renew
 
 ```bash
 # Navigate to project directory
-cd /home/teddybear/html/public/ai-tools-hub
+cd /home/teddybear/html/public/aikita
 
 # Pull latest changes
 git pull origin main

@@ -59,7 +59,7 @@ crontab -l 2>/dev/null | { cat; echo "0 12 * * * /usr/bin/certbot renew --quiet"
 echo -e "\n${YELLOW}⚙️ Configuring Nginx...${NC}"
 
 # Copy the nginx configuration
-cp /home/teddybear/html/public/ai-tools-hub/nginx.conf /etc/nginx/sites-available/$DOMAIN
+cp /home/teddybear/html/public/aikita/nginx.conf /etc/nginx/sites-available/$DOMAIN
 
 # Remove default site if exists
 rm -f /etc/nginx/sites-enabled/default
