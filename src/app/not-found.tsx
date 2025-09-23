@@ -49,8 +49,8 @@ export default function NotFound() {
               </h1>
 
               <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
-                The AI tool you're looking for seems to have vanished into the digital void.
-                Don't worry, our other amazing tools are still here waiting for you!
+                The AI tool you&apos;re looking for seems to have vanished into the digital void.
+                Don&apos;t worry, our other amazing tools are still here waiting for you!
               </p>
             </div>
 
@@ -130,7 +130,7 @@ export default function NotFound() {
               </Button>
 
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                Or use the search bar above to find what you're looking for
+                Or use the search bar above to find what you&apos;re looking for
               </p>
             </div>
 

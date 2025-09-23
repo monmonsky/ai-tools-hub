@@ -64,9 +64,9 @@ export const analytics = {
 };
 
 // Google Analytics helper functions
-export const gtag = (...args: any[]) => {
-  if (typeof window !== 'undefined' && (window as any).gtag) {
-    (window as any).gtag(...args);
+export const gtag = (...args: unknown[]) => {
+  if (typeof window !== 'undefined' && (window as typeof window & { gtag: (...args: unknown[]) => void }).gtag) {
+    (window as typeof window & { gtag: (...args: unknown[]) => void }).gtag(...args);
   }
 };
 
@@ -78,7 +78,7 @@ export const trackPageView = (url: string) => {
 };
 
 // Track custom events
-export const trackEvent = (eventName: string, parameters?: Record<string, any>) => {
+export const trackEvent = (eventName: string, parameters?: Record<string, unknown>) => {
   gtag('event', eventName, {
     ...parameters,
     event_category: 'user_interaction',
@@ -87,7 +87,7 @@ export const trackEvent = (eventName: string, parameters?: Record<string, any>) 
 };
 
 // Track tool interactions
-export const trackToolInteraction = (action: string, toolName: string, additionalData?: Record<string, any>) => {
+export const trackToolInteraction = (action: string, toolName: string, additionalData?: Record<string, unknown>) => {
   trackEvent(action, {
     tool_name: toolName,
     tool_category: additionalData?.category,
@@ -166,9 +166,10 @@ export const initGA = () => {
     document.head.appendChild(script);
 
     // Initialize gtag
-    (window as any).dataLayer = (window as any).dataLayer || [];
-    (window as any).gtag = function() {
-      (window as any).dataLayer.push(arguments);
+    (window as typeof window & { dataLayer: unknown[]; gtag: (...args: unknown[]) => void }).dataLayer =
+      (window as typeof window & { dataLayer?: unknown[] }).dataLayer || [];
+    (window as typeof window & { gtag: (...args: unknown[]) => void }).gtag = function(...args: unknown[]) {
+      (window as typeof window & { dataLayer: unknown[] }).dataLayer.push(args);
     };
 
     gtag('js', new Date());
