@@ -20,7 +20,7 @@ export interface EmailTemplate {
 
 // Create SMTP transporter for MXrouting
 export const createEmailTransporter = () => {
-  return nodemailer.createTransporter({
+  return nodemailer.createTransport({
     host: process.env.SMTP_HOST || 'your-server.mxrouting.net',
     port: parseInt(process.env.SMTP_PORT || '587'),
     secure: false, // true for 465, false for other ports
@@ -165,6 +165,6 @@ export const testEmailConnection = async () => {
     return { success: true };
   } catch (error) {
     console.error('❌ SMTP connection failed:', error);
-    return { success: false, error };
+    return { success: false, error: String(error) };
   }
 };
