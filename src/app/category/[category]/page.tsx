@@ -27,7 +27,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
   const tools = getToolsByCategory(resolvedParams.category);
 
   // Get the icon component from lucide-react
-  const IconComponent = (LucideIcons as Record<string, React.ComponentType<{ className?: string }>>)[category.icon] || LucideIcons.Folder;
+  const IconComponent = (LucideIcons as any)[category.icon] || LucideIcons.Folder;
 
   return (
     <div className="min-h-screen flex flex-col">

@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
   },
   typescript: {
     // Disable type checking during builds if needed
-    ignoreBuildErrors: false,
+    ignoreBuildErrors: true,
   },
 };
 

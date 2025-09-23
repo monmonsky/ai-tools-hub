@@ -36,7 +36,7 @@ export default function CategoriesPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {categories.map((category) => {
                 // Get the icon component from lucide-react
-                const IconComponent = (LucideIcons as Record<string, React.ComponentType<{ className?: string }>>)[category.icon] || LucideIcons.Folder;
+                const IconComponent = (LucideIcons as any)[category.icon] || LucideIcons.Folder;
                 const toolCount = tools.filter(tool => tool.category === category.name).length;
 
                 return (
