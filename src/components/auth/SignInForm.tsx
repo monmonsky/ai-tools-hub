@@ -14,10 +14,13 @@ export default function SignInForm() {
     setLoading(true)
     try {
       const supabase = createClient()
+      const redirectURL = process.env.NEXT_PUBLIC_SITE_URL || window.location.origin
+      console.log('OAuth Redirect URL:', `${redirectURL}/auth/callback`)
+
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || window.location.origin}/auth/callback`
+          redirectTo: `${redirectURL}/auth/callback`
         }
       })
       if (error) {
@@ -36,10 +39,13 @@ export default function SignInForm() {
     setLoading(true)
     try {
       const supabase = createClient()
+      const redirectURL = process.env.NEXT_PUBLIC_SITE_URL || window.location.origin
+      console.log('OAuth Redirect URL:', `${redirectURL}/auth/callback`)
+
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'github',
         options: {
-          redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || window.location.origin}/auth/callback`
+          redirectTo: `${redirectURL}/auth/callback`
         }
       })
       if (error) {
