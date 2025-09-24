@@ -1,4 +1,5 @@
 import NewsletterSubscription from "@/components/NewsletterSubscription";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -116,24 +117,24 @@ export default function Footer() {
             <h3 className="text-gray-900 dark:text-white font-semibold text-lg mb-6">Menu Utama</h3>
             <ul className="space-y-3">
               <li>
-                <a href="/" className="text-gray-600 dark:text-gray-400 hover:text-cyan-400 transition-colors duration-300">
+                <Link href="/" className="text-gray-600 dark:text-gray-400 hover:text-cyan-400 transition-colors duration-300">
                   Beranda
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/tools" className="text-gray-600 dark:text-gray-400 hover:text-cyan-400 transition-colors duration-300">
+                <Link href="/tools" className="text-gray-600 dark:text-gray-400 hover:text-cyan-400 transition-colors duration-300">
                   AI Tools
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/categories" className="text-gray-600 dark:text-gray-400 hover:text-cyan-400 transition-colors duration-300">
+                <Link href="/categories" className="text-gray-600 dark:text-gray-400 hover:text-cyan-400 transition-colors duration-300">
                   Kategori
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/compare" className="text-gray-600 dark:text-gray-400 hover:text-cyan-400 transition-colors duration-300">
+                <Link href="/compare" className="text-gray-600 dark:text-gray-400 hover:text-cyan-400 transition-colors duration-300">
                   Bandingkan
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -143,19 +144,19 @@ export default function Footer() {
             <h3 className="text-gray-900 dark:text-white font-semibold text-lg mb-6">Legal</h3>
             <ul className="space-y-3">
               <li>
-                <a href="/privacy-policy" className="text-gray-600 dark:text-gray-400 hover:text-cyan-400 transition-colors duration-300">
+                <Link href="/privacy-policy" className="text-gray-600 dark:text-gray-400 hover:text-cyan-400 transition-colors duration-300">
                   Kebijakan Privasi
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/terms-of-service" className="text-gray-600 dark:text-gray-400 hover:text-cyan-400 transition-colors duration-300">
+                <Link href="/terms-of-service" className="text-gray-600 dark:text-gray-400 hover:text-cyan-400 transition-colors duration-300">
                   Syarat & Ketentuan
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/cookies-policy" className="text-gray-600 dark:text-gray-400 hover:text-cyan-400 transition-colors duration-300">
+                <Link href="/cookies-policy" className="text-gray-600 dark:text-gray-400 hover:text-cyan-400 transition-colors duration-300">
                   Kebijakan Cookies
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="mailto:admin@aikita.id" className="text-gray-600 dark:text-gray-400 hover:text-cyan-400 transition-colors duration-300">
@@ -180,15 +181,24 @@ export default function Footer() {
               © {new Date().getFullYear()} Aikita. All rights reserved. Dibuat dengan ❤️ untuk komunitas AI Indonesia.
             </p>
             <div className="flex flex-wrap justify-center md:justify-end space-x-6">
-              {["Privacy Policy", "Terms of Service", "Cookies"].map((link) => (
-                <a
-                  key={link}
-                  href="#"
-                  className="text-gray-600 dark:text-gray-400 hover:text-cyan-400 transition-colors duration-300 text-sm"
-                >
-                  {link}
-                </a>
-              ))}
+              <Link
+                href="/privacy-policy"
+                className="text-gray-600 dark:text-gray-400 hover:text-cyan-400 transition-colors duration-300 text-sm"
+              >
+                Privacy Policy
+              </Link>
+              <Link
+                href="/terms-of-service"
+                className="text-gray-600 dark:text-gray-400 hover:text-cyan-400 transition-colors duration-300 text-sm"
+              >
+                Terms of Service
+              </Link>
+              <Link
+                href="/cookies-policy"
+                className="text-gray-600 dark:text-gray-400 hover:text-cyan-400 transition-colors duration-300 text-sm"
+              >
+                Cookies
+              </Link>
             </div>
           </div>
         </div>

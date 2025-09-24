@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import CookieConsent from "@/components/CookieConsent";
+import RouterLoader from "@/components/RouterLoader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -197,7 +199,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <RouterLoader />
           {children}
+          <CookieConsent />
         </ThemeProvider>
       </body>
     </html>
