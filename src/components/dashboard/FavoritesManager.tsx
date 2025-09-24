@@ -1,8 +1,7 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { useAuth } from '@/contexts/AuthContext'
-import { createClient } from '@/lib/supabase/client'
+import { useState } from 'react'
+import { useFavorites } from '@/contexts/FavoritesContext'
 import Link from 'next/link'
 import { Heart, Star, ExternalLink, Trash2, Grid, List, Search } from 'lucide-react'
 
@@ -19,9 +18,7 @@ interface FavoriteTool {
 }
 
 export default function FavoritesManager() {
-  const { user } = useAuth()
-  const [favorites, setFavorites] = useState<FavoriteTool[]>([])
-  const [loading, setLoading] = useState(true)
+  const { favorites, loading, removeFromFavorites } = useFavorites()
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('')
@@ -31,92 +28,21 @@ export default function FavoritesManager() {
     'Code Generation', 'Voice/Audio', 'Data Analysis', 'Productivity'
   ]
 
-  useEffect(() => {
-    if (user) {
-      fetchFavorites()
-    }
-  }, [user])
-
-  const fetchFavorites = async () => {
-    try {
-      const supabase = createClient()
-
-      const { data } = await supabase
-        .from('user_tools')
-        .select('id, tool_id, created_at')
-        .eq('user_id', user?.id)
-        .eq('action_type', 'favorite')
-        .order('created_at', { ascending: false })
-
-      // Mock tool data - in real app you'd join with tools table
-      const mockFavorites: FavoriteTool[] = data?.map((item, index) => {
-        const toolNames = [
-          'ChatGPT', 'Midjourney', 'Claude AI', 'Jasper AI', 'Copy.ai', 'Runway ML',
-          'Stable Diffusion', 'Notion AI', 'GitHub Copilot', 'DeepL Write'
-        ]
-        const toolDescriptions = [
-          'AI chatbot canggih untuk percakapan dan bantuan dalam berbagai tugas',
-          'AI generator gambar dengan kualitas tinggi dan gaya artistik yang beragam',
-          'Asisten AI yang membantu dalam analisis, penulisan, dan berbagai tugas kognitif',
-          'Platform AI untuk copywriting dan content creation yang profesional',
-          'Tool AI untuk membuat copy marketing dan content yang menarik',
-          'Platform AI untuk video generation dengan fitur editing canggih',
-          'Generator gambar AI open-source dengan kontrol penuh',
-          'Asisten AI terintegrasi untuk produktivitas workspace',
-          'AI code assistant untuk meningkatkan produktivitas coding',
-          'AI writing assistant untuk meningkatkan kualitas tulisan'
-        ]
-        const toolCategories = [
-          'Chatbot', 'Image Generation', 'Writing', 'Writing', 'Writing', 'Video Generation',
-          'Image Generation', 'Productivity', 'Code Generation', 'Writing'
-        ]
-        const toolPricing = ['Freemium', 'Paid', 'Free', 'Paid', 'Freemium', 'Paid', 'Free', 'Freemium', 'Paid', 'Freemium']
-
-        return {
-          id: item.id,
-          tool_id: item.tool_id,
-          created_at: item.created_at,
-          tool_name: toolNames[index % toolNames.length],
-          tool_description: toolDescriptions[index % toolDescriptions.length],
-          tool_category: toolCategories[index % toolCategories.length],
-          tool_rating: 4.2 + (index % 8) * 0.1,
-          tool_pricing: toolPricing[index % toolPricing.length],
-          tool_website: `https://${toolNames[index % toolNames.length].toLowerCase().replace(' ', '')}.com`
-        }
-      }) || []
-
-      setFavorites(mockFavorites)
-    } catch (error) {
-      console.error('Error fetching favorites:', error)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const removeFavorite = async (favoriteId: string, toolName: string) => {
+  const removeFavorite = async (toolId: string, toolName: string) => {
     if (!confirm(`Hapus ${toolName} dari favorit?`)) return
 
     try {
-      const supabase = createClient()
-
-      const { error } = await supabase
-        .from('user_tools')
-        .delete()
-        .eq('id', favoriteId)
-
-      if (error) throw error
-
-      setFavorites(prev => prev.filter(fav => fav.id !== favoriteId))
+      await removeFromFavorites(toolId)
     } catch (error) {
       console.error('Error removing favorite:', error)
     }
   }
 
   const filteredFavorites = favorites.filter(fav => {
-    const matchesSearch = fav.tool_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         fav.tool_description.toLowerCase().includes(searchQuery.toLowerCase())
+    const matchesSearch = fav.tool?.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         fav.tool?.description.toLowerCase().includes(searchQuery.toLowerCase())
     const matchesCategory = selectedCategory === '' || selectedCategory === 'Semua' ||
-                           fav.tool_category === selectedCategory
+                           fav.tool?.category === selectedCategory
 
     return matchesSearch && matchesCategory
   })
@@ -136,7 +62,7 @@ export default function FavoritesManager() {
   return (
     <div className="space-y-6">
       {/* Controls */}
-      <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 p-6">
+      <div className="bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 p-6">
         <div className="flex flex-col md:flex-row gap-4">
           {/* Search */}
           <div className="flex-1 relative">

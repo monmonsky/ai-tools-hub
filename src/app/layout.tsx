@@ -3,6 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { FavoritesProvider } from "@/contexts/FavoritesContext";
+import { SearchHistoryProvider } from "@/contexts/SearchHistoryContext";
+import { BookmarksProvider } from "@/contexts/BookmarksContext";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import CookieConsent from "@/components/CookieConsent";
 import RouterLoader from "@/components/RouterLoader";
@@ -201,9 +204,15 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <AuthProvider>
-            <RouterLoader />
-            {children}
-            <CookieConsent />
+            <FavoritesProvider>
+              <SearchHistoryProvider>
+                <BookmarksProvider>
+                  <RouterLoader />
+                  {children}
+                  <CookieConsent />
+                </BookmarksProvider>
+              </SearchHistoryProvider>
+            </FavoritesProvider>
           </AuthProvider>
         </ThemeProvider>
       </body>

@@ -1,8 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { useAuth } from '@/contexts/AuthContext'
-import { createClient } from '@/lib/supabase/client'
+import { useState } from 'react'
+import { useSearchHistory } from '@/contexts/SearchHistoryContext'
 import {
   Search,
   Clock,
@@ -13,93 +12,14 @@ import {
   ExternalLink
 } from 'lucide-react'
 
-interface SearchHistory {
-  id: string
-  query: string
-  results_count: number
-  created_at: string
-}
-
 export default function SearchHistoryContent() {
-  const { user } = useAuth()
-  const [searchHistory, setSearchHistory] = useState<SearchHistory[]>([])
-  const [loading, setLoading] = useState(true)
+  const { searchHistory, loading, clearHistory, removeFromHistory } = useSearchHistory()
   const [filter, setFilter] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
 
-  useEffect(() => {
-    if (user) {
-      fetchSearchHistory()
-    }
-  }, [user])
-
-  const fetchSearchHistory = async () => {
-    try {
-      const supabase = createClient()
-      const { data, error } = await supabase
-        .from('search_history')
-        .select('*')
-        .eq('user_id', user?.id)
-        .order('created_at', { ascending: false })
-        .limit(50)
-
-      if (error) {
-        console.error('Error fetching search history:', error)
-        return
-      }
-
-      // Mock data for now since we don't have the table set up
-      const mockData: SearchHistory[] = [
-        {
-          id: '1',
-          query: 'AI Writing Tools',
-          results_count: 24,
-          created_at: new Date().toISOString()
-        },
-        {
-          id: '2',
-          query: 'Image Generator',
-          results_count: 18,
-          created_at: new Date(Date.now() - 86400000).toISOString()
-        },
-        {
-          id: '3',
-          query: 'Video Editing AI',
-          results_count: 12,
-          created_at: new Date(Date.now() - 172800000).toISOString()
-        },
-        {
-          id: '4',
-          query: 'Chatbot Platforms',
-          results_count: 36,
-          created_at: new Date(Date.now() - 259200000).toISOString()
-        }
-      ]
-
-      setSearchHistory(data || mockData)
-    } catch (error) {
-      console.error('Error:', error)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const clearHistory = async () => {
+  const handleClearHistory = async () => {
     if (!confirm('Hapus semua riwayat pencarian?')) return
-
-    try {
-      const supabase = createClient()
-      const { error } = await supabase
-        .from('search_history')
-        .delete()
-        .eq('user_id', user?.id)
-
-      if (!error) {
-        setSearchHistory([])
-      }
-    } catch (error) {
-      console.error('Error clearing history:', error)
-    }
+    await clearHistory()
   }
 
   const filteredHistory = searchHistory.filter(item => {
@@ -154,7 +74,7 @@ export default function SearchHistoryContent() {
 
         <div className="flex items-center gap-3">
           <button
-            onClick={clearHistory}
+            onClick={handleClearHistory}
             className="flex items-center gap-2 px-4 py-2 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-800 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
           >
             <Trash2 className="w-4 h-4" />
@@ -282,7 +202,10 @@ export default function SearchHistoryContent() {
                   >
                     Cari Lagi
                   </a>
-                  <button className="p-2 text-gray-400 hover:text-red-500 transition-colors">
+                  <button
+                    onClick={() => removeFromHistory(item.id)}
+                    className="p-2 text-gray-400 hover:text-red-500 transition-colors"
+                  >
                     <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
