@@ -24,7 +24,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [supabase] = useState(() => {
     try {
       const client = createClient()
-      console.log('AuthContext - Supabase client created successfully')
       return client
     } catch (error) {
       console.warn('Supabase client creation failed:', error)
@@ -35,7 +34,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const fetchProfile = async (userId: string) => {
     if (!supabase) return
 
-    console.log('AuthContext - fetchProfile started for userId:', userId)
     try {
       const { data, error } = await supabase
         .from('profiles')
@@ -45,15 +43,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (error && error.code !== 'PGRST116') {
         console.error('Error fetching profile:', error)
-        console.log('AuthContext - fetchProfile completed with error, continuing...')
         return
       }
 
-      console.log('AuthContext - fetchProfile completed successfully, data:', data)
       setProfile(data || null)
     } catch (error) {
       console.error('Error fetching profile:', error)
-      console.log('AuthContext - fetchProfile completed with catch error, continuing...')
     }
   }
 

@@ -76,33 +76,37 @@ export default function DashboardStats() {
       title: 'Tools Favorit',
       value: stats.favorites,
       icon: Heart,
-      color: 'text-red-400',
-      bgColor: 'bg-red-500/10',
-      borderColor: 'border-red-500/20'
+      color: 'text-red-500',
+      bgColor: 'bg-red-50 dark:bg-red-900/20',
+      iconBg: 'bg-red-100 dark:bg-red-900/40',
+      borderColor: 'border-red-200 dark:border-red-800'
     },
     {
       title: 'Pencarian',
       value: stats.searches,
       icon: Search,
-      color: 'text-blue-400',
-      bgColor: 'bg-blue-500/10',
-      borderColor: 'border-blue-500/20'
+      color: 'text-blue-500',
+      bgColor: 'bg-blue-50 dark:bg-blue-900/20',
+      iconBg: 'bg-blue-100 dark:bg-blue-900/40',
+      borderColor: 'border-blue-200 dark:border-blue-800'
     },
     {
       title: 'Tools Dikunjungi',
       value: stats.visits,
       icon: Eye,
-      color: 'text-green-400',
-      bgColor: 'bg-green-500/10',
-      borderColor: 'border-green-500/20'
+      color: 'text-green-500',
+      bgColor: 'bg-green-50 dark:bg-green-900/20',
+      iconBg: 'bg-green-100 dark:bg-green-900/40',
+      borderColor: 'border-green-200 dark:border-green-800'
     },
     {
       title: 'Review Ditulis',
       value: stats.reviews,
       icon: Star,
-      color: 'text-yellow-400',
-      bgColor: 'bg-yellow-500/10',
-      borderColor: 'border-yellow-500/20'
+      color: 'text-yellow-500',
+      bgColor: 'bg-yellow-50 dark:bg-yellow-900/20',
+      iconBg: 'bg-yellow-100 dark:bg-yellow-900/40',
+      borderColor: 'border-yellow-200 dark:border-yellow-800'
     }
   ]
 
@@ -111,19 +115,34 @@ export default function DashboardStats() {
       {statCards.map((stat, index) => (
         <div
           key={index}
-          className={`${stat.bgColor} ${stat.borderColor} rounded-xl p-6 border`}
+          className={`${stat.bgColor} ${stat.borderColor} bg-white dark:bg-slate-800 rounded-xl p-6 border transition-all duration-200 hover:shadow-lg dark:hover:shadow-2xl hover:-translate-y-1`}
         >
           <div className="flex items-center justify-between mb-4">
-            <div className={`p-3 rounded-lg ${stat.bgColor}`}>
+            <div className={`p-3 rounded-lg ${stat.iconBg}`}>
               <stat.icon className={`w-6 h-6 ${stat.color}`} />
+            </div>
+            <div className="text-right">
+              <div className="text-xs text-gray-500 dark:text-slate-400">
+                Bulan ini
+              </div>
             </div>
           </div>
 
           <div className="space-y-1">
-            <p className="text-2xl font-bold text-white">
-              {loading ? '-' : stat.value.toLocaleString()}
+            <p className="text-2xl font-bold text-gray-900 dark:text-white">
+              {loading ? (
+                <div className="h-8 w-12 bg-gray-200 dark:bg-slate-700 rounded animate-pulse"></div>
+              ) : (
+                stat.value.toLocaleString()
+              )}
             </p>
-            <p className="text-sm text-slate-400">{stat.title}</p>
+            <p className="text-sm text-gray-600 dark:text-slate-400">{stat.title}</p>
+
+            {/* Progress indicator */}
+            <div className="flex items-center gap-1 mt-2">
+              <div className="text-xs text-green-600 dark:text-green-400">↗ +12%</div>
+              <div className="text-xs text-gray-500 dark:text-slate-500">vs last month</div>
+            </div>
           </div>
         </div>
       ))}

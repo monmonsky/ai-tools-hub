@@ -15,7 +15,6 @@ export default function SignInForm() {
     try {
       const supabase = createClient()
       const redirectURL = process.env.NEXT_PUBLIC_SITE_URL || window.location.origin
-      console.log('OAuth Redirect URL:', `${redirectURL}/auth/callback`)
 
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
@@ -40,7 +39,6 @@ export default function SignInForm() {
     try {
       const supabase = createClient()
       const redirectURL = process.env.NEXT_PUBLIC_SITE_URL || window.location.origin
-      console.log('OAuth Redirect URL:', `${redirectURL}/auth/callback`)
 
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'github',
