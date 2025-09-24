@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { ThemeToggle } from "./theme-toggle";
 import UserMenu from "./UserMenu";
+import ClientOnly from "./ClientOnly";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -58,7 +59,17 @@ export default function Navigation() {
             </div>
             <div className="flex items-center gap-4">
               <ThemeToggle />
-              <UserMenu />
+              <ClientOnly
+                fallback={
+                  <div className="flex items-center">
+                    <div className="px-6 py-2 bg-gradient-to-r from-cyan-500 to-purple-600 text-white rounded-lg font-medium opacity-50">
+                      Loading...
+                    </div>
+                  </div>
+                }
+              >
+                <UserMenu />
+              </ClientOnly>
             </div>
           </div>
 

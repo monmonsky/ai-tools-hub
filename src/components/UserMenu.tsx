@@ -6,26 +6,6 @@ import { useAuth } from '@/contexts/AuthContext'
 import { LogOut, User, Settings, Heart, Search, Loader2 } from 'lucide-react'
 
 export default function UserMenu() {
-  const [isMounted, setIsMounted] = useState(false)
-
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
-
-  // Don't render auth-dependent content during SSR
-  if (!isMounted) {
-    return (
-      <div className="flex items-center">
-        <Link
-          href="/auth/signin"
-          className="px-6 py-2 bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white rounded-lg font-medium transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-        >
-          Masuk / Daftar
-        </Link>
-      </div>
-    )
-  }
-
   const { user, profile, loading, signOut } = useAuth()
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [isSigningOut, setIsSigningOut] = useState(false)
