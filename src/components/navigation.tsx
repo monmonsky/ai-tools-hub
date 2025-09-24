@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ThemeToggle } from "./theme-toggle";
+import UserMenu from "./UserMenu";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -55,7 +56,10 @@ export default function Navigation() {
                 <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-purple-600/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </Link>
             </div>
-            <ThemeToggle />
+            <div className="flex items-center gap-4">
+              <ThemeToggle />
+              <UserMenu />
+            </div>
           </div>
 
           <div className="md:hidden flex items-center space-x-4">
