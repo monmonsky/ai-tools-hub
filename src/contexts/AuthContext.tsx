@@ -21,10 +21,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<Session | null>(null)
   const [profile, setProfile] = useState<Profile | null>(null)
   const [loading, setLoading] = useState(true)
-
-  const supabase = createClient()
+  const [supabase] = useState(() => {
+    try {
+      return createClient()
+    } catch (error) {
+      console.warn('Supabase client creation failed:', error)
+      return null
+    }
+  })
 
   const fetchProfile = async (userId: string) => {
+    if (!supabase) return
+
     try {
       const { data, error } = await supabase
         .from('profiles')
@@ -50,6 +58,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   const signOut = async () => {
+    if (!supabase) return
+
     const { error } = await supabase.auth.signOut()
     if (error) {
       console.error('Error signing out:', error)
@@ -57,6 +67,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   useEffect(() => {
+    if (!supabase) {
+      setLoading(false)
+      return
+    }
+
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
@@ -82,10 +97,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       } else {
         setLoading(false)
       }
+    }).catch(() => {
+      setLoading(false)
     })
 
     return () => subscription.unsubscribe()
-  }, [])
+  }, [supabase])
 
   const value = {
     user,
