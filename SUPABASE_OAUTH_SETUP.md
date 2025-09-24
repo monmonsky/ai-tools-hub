@@ -24,11 +24,15 @@ Untuk mengaktifkan login Google dan GitHub, Anda perlu mengonfigurasi OAuth prov
    - APIs & Services → Credentials → Create Credentials → OAuth 2.0 Client IDs
    - Application type: Web application
    - Name: "Aikita OAuth"
+   - Authorized JavaScript origins:
+     ```
+     http://localhost:3001
+     https://aikita.id
+     https://uthgchakkqsterqjjfhr.supabase.co
+     ```
    - Authorized redirect URIs:
      ```
      https://uthgchakkqsterqjjfhr.supabase.co/auth/v1/callback
-     http://localhost:3000/auth/callback (for development)
-     http://localhost:3001/auth/callback (for development)
      ```
    - Save dan copy Client ID & Client Secret
 
@@ -64,10 +68,11 @@ Untuk mengaktifkan login Google dan GitHub, Anda perlu mengonfigurasi OAuth prov
 
 ### 5. Update Site URL (Penting!)
 1. Di Supabase Dashboard → Authentication → URL Configuration
-2. Set Site URL: `http://localhost:3000` (development) atau `https://aikita.id` (production)
+2. Set Site URL berdasarkan environment:
+   - **Development**: `http://localhost:3001`
+   - **Production**: `https://aikita.id`
 3. Add Redirect URLs:
    ```
-   http://localhost:3000/**
    http://localhost:3001/**
    https://aikita.id/**
    ```
