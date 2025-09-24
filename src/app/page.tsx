@@ -3,6 +3,7 @@ import Hero from "@/components/hero";
 import Footer from "@/components/footer";
 import ToolCard from "@/components/ToolCard";
 import CompareButton from "@/components/CompareButton";
+import NewsletterSubscription from "@/components/NewsletterSubscription";
 import { tools, categories } from "@/lib/data";
 import Link from "next/link";
 import * as LucideIcons from "lucide-react";
