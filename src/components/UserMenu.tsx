@@ -10,9 +10,6 @@ export default function UserMenu() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [isSigningOut, setIsSigningOut] = useState(false)
 
-  // Debug logging
-  console.log('UserMenu - loading:', loading, 'user:', user, 'profile:', profile)
-
   const handleSignOut = async () => {
     setIsSigningOut(true)
     await signOut()

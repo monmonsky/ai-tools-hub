@@ -35,6 +35,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const fetchProfile = async (userId: string) => {
     if (!supabase) return
 
+    console.log('AuthContext - fetchProfile started for userId:', userId)
     try {
       const { data, error } = await supabase
         .from('profiles')
@@ -44,12 +45,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (error && error.code !== 'PGRST116') {
         console.error('Error fetching profile:', error)
+        console.log('AuthContext - fetchProfile completed with error, continuing...')
         return
       }
 
+      console.log('AuthContext - fetchProfile completed successfully, data:', data)
       setProfile(data || null)
     } catch (error) {
       console.error('Error fetching profile:', error)
+      console.log('AuthContext - fetchProfile completed with catch error, continuing...')
     }
   }
 
@@ -87,12 +91,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (session?.user) {
         console.log('AuthContext - User found, fetching profile for:', session.user.email)
-        await fetchProfile(session.user.id)
+        try {
+          // Add timeout to prevent infinite loading
+          await Promise.race([
+            fetchProfile(session.user.id),
+            new Promise((_, reject) =>
+              setTimeout(() => reject(new Error('Profile fetch timeout')), 5000)
+            )
+          ])
+        } catch (error) {
+          console.error('AuthContext - Profile fetch failed or timed out:', error)
+        }
       } else {
         console.log('AuthContext - No user, clearing profile')
         setProfile(null)
       }
 
+      console.log('AuthContext - Setting loading to false')
       setLoading(false)
     })
 
@@ -106,7 +121,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (session?.user) {
         console.log('AuthContext - Initial user found:', session.user.email)
-        fetchProfile(session.user.id)
+        try {
+          // Add timeout to prevent infinite loading
+          await Promise.race([
+            fetchProfile(session.user.id),
+            new Promise((_, reject) =>
+              setTimeout(() => reject(new Error('Profile fetch timeout')), 5000)
+            )
+          ])
+        } catch (error) {
+          console.error('AuthContext - Initial profile fetch failed or timed out:', error)
+        }
+        setLoading(false)
       } else {
         console.log('AuthContext - No initial session found')
         setLoading(false)
