@@ -23,7 +23,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true)
   const [supabase] = useState(() => {
     try {
-      return createClient()
+      const client = createClient()
+      console.log('AuthContext - Supabase client created successfully')
+      return client
     } catch (error) {
       console.warn('Supabase client creation failed:', error)
       return null
@@ -79,12 +81,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (!mounted) return
 
+      console.log('AuthContext - Auth state change:', event, 'session:', session)
       setSession(session)
       setUser(session?.user ?? null)
 
       if (session?.user) {
+        console.log('AuthContext - User found, fetching profile for:', session.user.email)
         await fetchProfile(session.user.id)
       } else {
+        console.log('AuthContext - No user, clearing profile')
         setProfile(null)
       }
 
@@ -95,15 +100,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (!mounted) return
 
+      console.log('AuthContext - Initial session:', session)
       setSession(session)
       setUser(session?.user ?? null)
 
       if (session?.user) {
+        console.log('AuthContext - Initial user found:', session.user.email)
         fetchProfile(session.user.id)
       } else {
+        console.log('AuthContext - No initial session found')
         setLoading(false)
       }
-    }).catch(() => {
+    }).catch((error) => {
+      console.error('AuthContext - Error getting initial session:', error)
       if (mounted) {
         setLoading(false)
       }
